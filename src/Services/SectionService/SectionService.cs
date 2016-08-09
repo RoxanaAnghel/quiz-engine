@@ -61,10 +61,10 @@ namespace Qubiz.QuizEngine.Services.SectionService
 		{
 			using (IUnitOfWork unitOfWork = new UnitOfWork(config))
 			{
-				Section section = await unitOfWork.SectionRepository.GetSectionByIDAsync(newSection.ID);
-				if (section == null)
+				Section section = await unitOfWork.SectionRepository.GetSectionByNameAsync(newSection.Name);
+				if (section != null)
 				{
-					return new ValidationError[1] { new ValidationError() { Message = "Update failed! There is no Section instance with this ID!" } };
+					return new ValidationError[1] { new ValidationError() { Message = "Update failed! There already exists a Section instance with this name!" } };
 				}
 
 				Mapper.Map(newSection, section);

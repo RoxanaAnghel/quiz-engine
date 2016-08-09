@@ -26,6 +26,14 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
 			return Ok(sections);
 		}
 
+		[HttpGet]
+		public async Task<IHttpActionResult> GetSection(Guid id)
+		{
+			Section section = await sectionService.GetSectionAsync(id);
+
+			return Ok(section);
+		}
+
 		[HttpDelete]
 		public async Task<IHttpActionResult> DeleteSection(Guid id)
 		{
