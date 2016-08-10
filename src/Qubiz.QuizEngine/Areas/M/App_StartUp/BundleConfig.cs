@@ -48,6 +48,9 @@ namespace Qubiz.QuizEngine.Areas.M
             controllerBundle.Include("~/Areas/M/App/MainBarController/MainBar.controller.js");
             controllerBundle.Include("~/Areas/M/App/Controllers/questions.controller.js");
 			controllerBundle.Include("~/Areas/M/App/Sections/sections.controller.js");
+            controllerBundle.Include("~/Areas/M/App/Controllers/questionsedit.controller.js");
+            controllerBundle.Include("~/Areas/M/App/Controllers/questionsadd.controller.js");
+            controllerBundle.Include("~/Areas/M/App/Controllers/ck-editor.directive.js");
             bundles.Add(controllerBundle);
 
             Bundle serviceBundle = new Bundle("~/Areas/M/AngularServices", jsTransforms);

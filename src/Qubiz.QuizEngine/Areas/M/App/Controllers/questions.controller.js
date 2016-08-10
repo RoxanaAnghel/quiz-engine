@@ -4,9 +4,9 @@
         .module('quizEngineMaterial')
         .controller('QuestionListController', QuestionListController)
 
-    QuestionListController.$inject = ['questionData'];
+    QuestionListController.$inject = ['questionData', '$location'];
 
-    function QuestionListController(questionData) {
+    function QuestionListController(questionData, $location) {
         var vm = this;
 
         vm.itemsPerPage = 8;
@@ -15,7 +15,7 @@
         vm.nextPage = nextPage;
         vm.prevPage = prevPage;
         vm.updatePage = updatePage;
-        vm.selectQuestion = selectQuestion;
+        vm.editQuestion = editQuestion;
         vm.deleteQuestion = deleteQuestion;
 
         vm.pageNumber = 0;
@@ -29,8 +29,8 @@
             });
         }
 
-        function selectQuestion(question) {
-            vm.selectedQuestion = angular.copy(question);
+        function editQuestion(question) {
+            $location.path('/editquestion/' + question.ID);
         }
 
         function deleteQuestion(question) {
@@ -49,7 +49,7 @@
         }
 
         function addPage(){
-
+            
         }
 
         function updatePage() {

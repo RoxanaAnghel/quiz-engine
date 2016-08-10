@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Qubiz.QuizEngine.Infrastructure;
 
 namespace Qubiz.QuizEngine.Database.Repositories
 {
@@ -40,13 +41,18 @@ namespace Qubiz.QuizEngine.Database.Repositories
 
         public async Task UpdateQuestionAsync(QuestionDefinition question)
         {
-            throw new NotImplementedException();
+            Upsert(question.DeepCopyTo<Entities.QuestionDefinition>());
+        }
+
+        public async Task AddQuestionAsync(QuestionDefinition question)
+        {
+            Create(question.DeepCopyTo<Entities.QuestionDefinition>());
         }
 
         public async Task DeleteQuestionAsync(Guid id)
         {
             Entities.QuestionDefinition question = dbSet.Where(i => i.ID == id).ToList()[0];
-            dbSet.Remove(question);
+            Delete(question);
         }
     }
 }

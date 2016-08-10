@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Qubiz.QuizEngine.Database.Repositories
 {
     public interface IQuestionRepository
-	{
+    {
+        Task AddQuestionAsync(QuestionDefinition question);
         Task UpdateQuestionAsync(QuestionDefinition question);
 
         Task DeleteQuestionAsync(Guid id);

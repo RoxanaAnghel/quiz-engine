@@ -1,0 +1,29 @@
+﻿
+<div class="container" style="margin-top: 20px;">
+    <div class="col-md-12">
+        <div class="col-md-6" ng-show="questionCtrl.editedQuestion">
+            <h2>Question #{{questionCtrl.editedQuestion.Number}}</h2>
+        </div>
+        <div class="col-md-6">
+            <md-button class="md-raised col-md-2 pull-right qubiz-color" ng-click="questionCtrl.resetFields()">
+                <i class="material-icons" style="margin-top: 12px;">refresh</i>
+            </md-button>
+            <md-button class="md-raised col-md-2 pull-right qubiz-color" ng-click="questionCtrl.cancelEdit()">
+                <i class="material-icons" style="margin-top: 12px;">cancel</i>
+            </md-button>
+            <md-button class="md-raised col-md-2 pull-right qubiz-color" ng-click="questionCtrl.saveEdit()">
+                <i class="material-icons" style="margin-top: 12px;">save</i>
+            </md-button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <textarea name="QuestionText" ck-editor ng-model="question.QuestionText" style="height: 100px; width:500px;"></textarea>
+        </div>
+        <div class="col-md-6">
+            <select class="form-control" ng-model="questionCtrl.editedQuestion.SectionID" ng-options="section.ID as section.Name for section in Sections">
+                <option value="">-- Select one --</option>
+            </select>
+        </div>
+    </div>
+</div>

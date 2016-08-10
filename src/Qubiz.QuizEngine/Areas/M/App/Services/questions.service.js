@@ -11,6 +11,8 @@
 
         this.getQuestionsPaged = getQuestionsPaged;
         this.deleteQuestion = deleteQuestion;
+        this.getQuestionByID = getQuestionByID;
+        this.updateQuestion = updateQuestion;
 
         function getQuestionsPaged(pageNumber, itemsPerPage) {
             return $http({
@@ -30,5 +32,32 @@
                 url: 'api/Questions/DeleteQuestion/' + id
             });
         }
+
+        function getQuestionByID(ID){
+            return $http({
+                method: 'GET',
+                url: 'api/Questions/GetQuestion/',
+                params: {
+                    ID: ID
+                }
+            });
+        }
+
+        function updateQuestion(question) {
+            return $http({
+                method: 'PUT',
+                url: 'api/Questions/PutQuestion/',
+                data: question
+            });
+        }
+
+        function addQuestion(question) {
+            return $http({
+                method: 'POST',
+                url: 'api/Questions/PostQuestion/',
+                data: question
+            });
+        }
+
     }
 })();

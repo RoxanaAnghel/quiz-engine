@@ -20,6 +20,26 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers
             return Ok(await questionService.GetQuestionsByPageAsync(pageNumber, itemsPerPage));
         }
 
+        [HttpGet]
+        public async Task<IHttpActionResult> GetQuestion(String ID)
+        {
+            return Ok(await questionService.GetQuestionByID(Guid.Parse(ID)));
+        }
+
+        [HttpPut]
+        public async Task<IHttpActionResult> PutQuestion(Services.Models.QuestionDetail question)
+        {
+            await questionService.UpdateQuestionAsync(question);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> PostQuestion(Services.Models.QuestionDetail question)
+        {
+            await questionService.AddQuestionAsync(question);
+            return Ok();
+        }
+
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteQuestion(string id)
         {
