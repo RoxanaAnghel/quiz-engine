@@ -13,6 +13,7 @@
         this.deleteQuestion = deleteQuestion;
         this.getQuestionByID = getQuestionByID;
         this.updateQuestion = updateQuestion;
+        this.addQuestion = addQuestion;
 
         function getQuestionsPaged(pageNumber, itemsPerPage) {
             return $http({

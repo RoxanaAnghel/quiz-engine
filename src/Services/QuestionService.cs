@@ -53,7 +53,7 @@ namespace Qubiz.QuizEngine.Services
             {
                 await unitOfWork.QuestionRepository.UpdateQuestionAsync(question.DeepCopyTo<Database.Models.QuestionDefinition>());
                 unitOfWork.OptionRepository.DeleteOptionsAsync((await unitOfWork.OptionRepository.GetOptionsByQuestionIDAsync(question.ID)).ToArray());
-                unitOfWork.OptionRepository.UpdateOptionsAsync(question.Options.Select(o => new Database.Models.OptionDefinition
+                unitOfWork.OptionRepository.AddOptionsAsync(question.Options.Select(o => new Database.Models.OptionDefinition
                 {
                     Answer = o.Answer,
                     ID = o.ID,
