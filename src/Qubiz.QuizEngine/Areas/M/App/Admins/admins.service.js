@@ -18,10 +18,7 @@
             return $http({
                 method: 'GET',
                 url: 'api/NewAdmin/GetAdmins'
-            }).then(function(result)
-            {
-                return result.data;
-            })
+            });
         }
 
         function addAdmin(admin) {

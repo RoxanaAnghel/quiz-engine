@@ -5,19 +5,21 @@
        .module('quizEngineMaterial')
        .controller('AdminsController', AdminsController);
 
-    AdminsController.$inject = ['adminsService', '$scope', '$mdDialog','guidsService'];
+    AdminsController.$inject = ['adminsService', '$scope', '$mdDialog','guidsService','$location'];
 
-    function AdminsController(adminsService, scope, mdDialog,guidsService) {
+    function AdminsController(adminsService, scope, mdDialog, guidsService, location) {
         var vm = this;
+
         vm.deleteAdmin = deleteAdmin;
+
         getAllAdmins();
+
+        vm.goToSave =goToSave;
 
         function getAllAdmins() {
             adminsService.getAllAdmins()
                 .then(function (result) {
-                    vm.admins = result;
-                    displayList();
-                    getGuid();
+                    displayList(result.data);
                 });
         }
 
@@ -45,22 +47,18 @@
                     scope.status = 'You cannot delete yourself.';
                 });
         }
-        function displayList() {
-            for (var i = 0; i < vm.admins.length; i++)
-                vm.admins[i].Name = vm.admins[i].Name.substring( 6);
+        function displayList(adminsWithoutDomain) {
+            vm.admins=[];
+            for (var i = 0; i <adminsWithoutDomain.length; i++) {
+                vm.admins[i] = adminsWithoutDomain[i];
+                vm.admins[i].Name = vm.admins[i].Name.substring(6);
+            }
         }
 
-        function getAdmin(name) {
-            console.log(name);
-            for (var i = 0; i < vm.admins.length; i++)
-                if (name == vm.admins[i].Name)
-                    return vm.admins[i].Name;
+        function goToSave(){
 
-        }
-
-        function getGuid(){
-
-            vm.Guid =guidsService.getGuid();
+            vm.Guid = guidsService.getGuid();
+            location.path('/saveadmin/' + vm.Guid);
         }
         
     }
