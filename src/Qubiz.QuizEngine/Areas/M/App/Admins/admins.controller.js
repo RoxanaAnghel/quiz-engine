@@ -12,16 +12,6 @@
         var vm = this;
         vm.deleteAdmin = deleteAdmin;
         vm.goToSave = goToSave;
-
-        getAllAdmins();
-
-        function getAllAdmins() {
-            adminsService.getAllAdmins()
-                .then(function (result) {
-                    displayList(result.data);
-                });
-        }
-
         scope.showConfirm = function (ev, Admin) {
             var confirm = mdDialog.confirm()
                   .title('Are you sure you want to delete the admin '+ Admin.Name +' ?')
@@ -35,6 +25,16 @@
             });
         };
 
+        getAllAdmins();
+
+        function getAllAdmins() {
+            adminsService.getAllAdmins()
+                .then(function (result) {
+                    editAdmins(result.data);
+                });
+        }
+
+
         function deleteAdmin(id) {
             adminsService.deleteAdmin(id)
                 .then(function () {
@@ -46,7 +46,7 @@
                 });
         }
 
-        function displayList(withDomain) {
+        function editAdmins(withDomain) {
             vm.admins = [];
             for (var i = 0; i < withDomain.length; i++)
             {

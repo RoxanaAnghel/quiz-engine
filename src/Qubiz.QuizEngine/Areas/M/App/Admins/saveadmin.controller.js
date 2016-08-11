@@ -11,32 +11,31 @@
 
         var vm = this;
         vm.admin = undefined;
+        vm.saveText = undefined;
+        vm.saveType = true;
 
         var originalAdmin;
+
+        vm.save = save;
+        vm.reset = reset;
 
         adminsService.getById($routeParams.id)
             .then(function (result) {
                 vm.admin = result.data;
                 if (vm.admin != null) {
+                    vm.saveType = false;
                     originalAdmin = vm.admin.Name;
-                    vm.reset = function () {
-                        vm.admin.Name = originalAdmin;
-                    }
-                    vm.save = editAdmin;
+                    vm.saveText = "Edit Admin";
                 }
                 else {
-                    vm.save = addAdmin;
                     vm.admin = {};
                     vm.admin.ID = $routeParams.id;
-                    vm.admin.Name = "";
-                    vm.reset = function () {
-                        vm.admin.Name = "";
-                    }
+                    vm.saveText = "Add Admin";
                 }
             });
 
-        function addAdmin() {
-            if (vm.admin.Name=="") {
+        function save() {
+            if (vm.admin.Name == "") {
                 mdDialog.show(mdDialog
                     .alert()
                     .title('Error')
@@ -44,6 +43,13 @@
                     .ok('Ok!'));
                 return;
             }
+            if (vm.saveType)
+                addAdmin();
+            else
+                editAdmin();
+        }
+
+        function addAdmin() {
             adminsService.addAdmin(vm.admin)
                 .then(function () {
                     location.path('/administrators');
@@ -58,14 +64,6 @@
         }
 
         function editAdmin() {
-            if (vm.admin.Name=="") {
-                mdDialog.show(mdDialog
-                    .alert()
-                    .title('Error')
-                    .textContent("Empty Name")
-                    .ok('Ok!'));
-                return;
-            }
             adminsService.editAdmin(vm.admin)
                 .then(function () {
                     location.path('/administrators');
@@ -78,6 +76,14 @@
                         .ok('Ok!'));
                 });
         }
-    }
 
+        function reset() {
+            if (vm.saveType) {
+                vm.admin.Name = "";
+            }
+            else {
+                vm.admin.Name = originalAdmin;
+            }
+        }
+    }
 })();
