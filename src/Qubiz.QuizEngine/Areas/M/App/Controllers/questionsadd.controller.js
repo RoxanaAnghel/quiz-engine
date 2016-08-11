@@ -67,8 +67,9 @@
         }
 
         function saveEdit() {
-            questionData.addQuestion(vm.editedQuestion);
-            $location.path('/questions');
+            questionData.addQuestion(vm.editedQuestion).then(function (){
+                $location.path('/questions');
+            });
         }
 
         function cancelEdit() {

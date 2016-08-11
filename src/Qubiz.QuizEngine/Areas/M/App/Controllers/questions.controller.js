@@ -4,7 +4,7 @@
         .module('quizEngineMaterial')
         .controller('QuestionListController', QuestionListController)
 
-    QuestionListController.$inject = ['questionData', '$location'];
+    QuestionListController.$inject = ['questionData', '$location', 'guidsService'];
 
     function QuestionListController(questionData, $location) {
         var vm = this;
