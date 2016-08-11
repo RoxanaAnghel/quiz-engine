@@ -1,10 +1,9 @@
-﻿using Qubiz.QuizEngine.Database.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Qubiz.QuizEngine.Database.Models
+namespace Qubiz.QuizEngine.Services.Models
 {
 	public class QuestionDefinition
 	{
@@ -20,4 +19,10 @@ namespace Qubiz.QuizEngine.Database.Models
         
         public int Number { get; set; }
     }
+
+    public enum QuestionType
+    {
+        SingleSelect, MultiSelect
+    }
+
 }
