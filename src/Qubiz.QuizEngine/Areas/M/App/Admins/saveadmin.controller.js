@@ -7,7 +7,7 @@
 
     SaveAdminController.$inject = ['adminsService', '$location', '$mdDialog','$routeParams'];
 
-    function SaveAdminController(adminsService, location, mdDialog,$routeParams) {
+    function SaveAdminController(adminsService, location, mdDialog, $routeParams) {
         var vm = this;
         var originalAdmin;
         adminsService.getById($routeParams.id)
@@ -32,7 +32,8 @@
         });
         
         function addAdmin() {
-            if (vm.admin.Name =="")
+
+            if (vm.admin.Name == "")
             {
                 mdDialog.show(mdDialog
                     .alert()
@@ -41,15 +42,16 @@
                     .ok('Ok!'));
                 return;
             }
+
             adminsService.addAdmin(vm.admin)
                 .then(function () {
                             location.path('/administrators');
                 })
-                .catch(function () {
-                   mdDialog.show(mdDialog
-                  .alert()
-                  .title('Error')
-                  .textContent("Already Exists")
+                .catch(function (response) {
+                    mdDialog.show(mdDialog
+                   .alert()
+                   .title('Error')
+                   .textContent(response.data.Message)
                   .ok('Ok!'));
                 });
         }
@@ -67,11 +69,11 @@
                 .then(function () {
                     location.path('/administrators');
                 })
-                .catch(function (result) {
+                .catch(function (response) {
                     mdDialog.show(mdDialog
                         .alert()
                         .title('Error')
-                        .textContent("Already Exists")
+                        .textContent(response.data.Message)
                         .ok('Ok!'));
                 });
          }

@@ -38,7 +38,7 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
             if (validationErrors.Length == 0)
                 return Ok();
 
-            return BadRequest();
+            return BadRequest(validationErrors[0].Message);
         }
 
         [HttpDelete]
@@ -52,7 +52,7 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
                 return Ok();
             }
 
-            return BadRequest();
+            return BadRequest(validationErrors[0].Message);
         }
 
         [HttpPut]
@@ -63,10 +63,10 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
             if (validationErrors.Length == 0)
             {
                 ApplicationMemoryCache.Instance.Remove("GetAllAdmins()");
-                return Ok();
+                return Ok(validationErrors[0].Message);
             }
 
-            return BadRequest();
+            return BadRequest(validationErrors[0].Message);
         }
     }
 }

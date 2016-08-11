@@ -18,9 +18,10 @@
             return $http({
                 method: 'GET',
                 url: 'api/NewAdmin/GetAdmins'
+            }).then(function(result)
+            {
+                return result.data;
             })
-            .then(getAllAdminsSuccess)
-            .catch(errorCallback);
         }
 
         function addAdmin(admin) {
@@ -44,14 +45,6 @@
                 method: 'GET',
                 url: 'api/NewAdmin/GetAdmin/' + id
             });
-        }
-
-        function getAllAdminsSuccess(response) {
-            return response.data;
-        }
-
-        function errorCallback(response) {
-            return response;
         }
 
         function deleteAdmin(id) {
