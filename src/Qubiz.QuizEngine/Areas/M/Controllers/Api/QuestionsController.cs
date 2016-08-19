@@ -5,11 +5,11 @@ using System.Web.Http;
 
 namespace Qubiz.QuizEngine.Areas.M.Controllers
 {
-    public class NewQuestionController : ApiController
+    public class QuestionsController : ApiController
     {
         private readonly IQuestionService questionService;
 
-        public NewQuestionController(IQuestionService questionService)
+        public QuestionsController(IQuestionService questionService)
         {
             this.questionService = questionService;
         }
