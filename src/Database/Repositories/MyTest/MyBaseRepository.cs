@@ -54,9 +54,25 @@ namespace Qubiz.QuizEngine.Database.Repositories.MyTest
             DbModel dbModel = model.DeepCopyTo<DbModel>();
             if (dbContext.Entry(dbModel).State == EntityState.Detached)
             {
-                dbSet.Attach(dbModel);
+                try
+                {
+                    dbSet.Attach(dbModel);
+                }
+                catch (Exception e)
+                {
+
+                }
+
             }
-            dbSet.Remove(dbModel);
+            try
+            {
+                dbSet.Remove(dbModel);
+            }
+            catch (Exception e)
+            {
+
+            }
+            
         }
 
         public virtual void Upsert<TModel, DbModel>(TModel entity)
