@@ -1,4 +1,5 @@
 ﻿using Qubiz.QuizEngine.Database.Entities;
+using Qubiz.QuizEngine.Database.Repositories.MyTest;
 using Qubiz.QuizEngine.Infrastructure;
 using Qubiz.QuizEngine.Services.AdminService;
 using System;
@@ -20,19 +21,19 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAdmin(Guid id)
         {
-            Admin admin = await adminService.GetAdminAsync(id);
+            MyAdmin admin = await adminService.GetAdminAsync(id);
             return Ok(admin);
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetAdmins()
         {
-            Admin[] admins = await adminService.GetAllAdminsAsync();
+            MyAdmin[] admins = await adminService.GetAllAdminsAsync();
             return Ok(admins);
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> AddAdmin([FromBody]Admin admin)
+        public async Task<IHttpActionResult> AddAdmin([FromBody]MyAdmin admin)
         {
             ValidationError[] validationErrors = await adminService.AddAdminAsync(admin, User.Identity.Name);
             if (validationErrors.Length == 0)
@@ -59,7 +60,7 @@ namespace Qubiz.QuizEngine.Areas.M.Controllers.Api
         }
 
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateAdmin([FromBody]Admin admin)
+        public async Task<IHttpActionResult> UpdateAdmin([FromBody]MyAdmin admin)
         {
             ValidationError[] validationErrors = await adminService.UpdateAdminAsync(admin, User.Identity.Name);
 

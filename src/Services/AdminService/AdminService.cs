@@ -4,6 +4,7 @@ using Qubiz.QuizEngine.Database.Repositories;
 using Qubiz.QuizEngine.Infrastructure;
 using System;
 using System.Threading.Tasks;
+using Qubiz.QuizEngine.Database.Repositories.MyTest;
 
 namespace Qubiz.QuizEngine.Services.AdminService
 {
@@ -16,14 +17,14 @@ namespace Qubiz.QuizEngine.Services.AdminService
             this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public async Task<ValidationError[]> AddAdminAsync(Admin admin, string originator)
+        public async Task<ValidationError[]> AddAdminAsync(MyAdmin admin, string originator)
         {
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.Create())
             {
                 if (!admin.Name.ToLowerInvariant().Contains(@"qubiz\"))
                     admin.Name = @"QUBIZ\" + admin.Name;
 
-                Admin adminUser = await unitOfWork.AdminRepository.GetByNameAsync(admin.Name);
+                MyAdmin adminUser = await unitOfWork.AdminRepository.GetByNameAsync(admin.Name);
                 if (adminUser != null)
                     return new ValidationError[1] { new ValidationError() { Message = "Name already exists!" } };
 
@@ -41,7 +42,7 @@ namespace Qubiz.QuizEngine.Services.AdminService
         {
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.Create())
             {
-                Admin admin = await unitOfWork.AdminRepository.GetByIDAsync(id);
+                MyAdmin admin = await unitOfWork.AdminRepository.GetByIDAsync(id);
 
                 if (admin.Name == originator)
                     return new ValidationError[1] { new ValidationError() { Message = "Can't delete yourself" } };
@@ -54,7 +55,7 @@ namespace Qubiz.QuizEngine.Services.AdminService
             }
         }
 
-        public async Task<Admin> GetAdminAsync(Guid id)
+        public async Task<MyAdmin> GetAdminAsync(Guid id)
         {
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.Create())
             {
@@ -62,7 +63,7 @@ namespace Qubiz.QuizEngine.Services.AdminService
             }
         }
 
-        public async Task<Admin[]> GetAllAdminsAsync()
+        public async Task<MyAdmin[]> GetAllAdminsAsync()
         {
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.Create())
             {
@@ -70,14 +71,14 @@ namespace Qubiz.QuizEngine.Services.AdminService
             }
         }
 
-        public async Task<ValidationError[]> UpdateAdminAsync(Admin admin, string originator)
+        public async Task<ValidationError[]> UpdateAdminAsync(MyAdmin admin, string originator)
         {
             using (IUnitOfWork unitOfWork = unitOfWorkFactory.Create())
             {
                 if (!admin.Name.ToLowerInvariant().Contains(@"qubiz\"))
                     admin.Name = @"QUBIZ\" + admin.Name;
 
-                Admin dbAdmin = await unitOfWork.AdminRepository.GetByIDAsync(admin.ID);
+                MyAdmin dbAdmin = await unitOfWork.AdminRepository.GetByIDAsync(admin.ID);
                 if (string.Compare(dbAdmin.Name, originator, true) == 0)
                     return new ValidationError[1] { new ValidationError() { Message = "You cannot edit yourself!" } };
 
