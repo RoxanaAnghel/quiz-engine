@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Qubiz.QuizEngine.Database.Repositories.MyTest
 {
-    public class MyBaseRepository<TModel, DbModel>where DbModel : class
+    public class MyBaseRepository<TModel, DbModel>where DbModel : class,IEntity
         where TModel:class
     {
         protected DbContext dbContext;
@@ -43,36 +43,55 @@ namespace Qubiz.QuizEngine.Database.Repositories.MyTest
             dbSet.Add(dbModel);
         }
 
-        public void Update(TModel model)
+        public void Update(TModel entity)
         {
-            DbModel dbModel = model.DeepCopyTo<DbModel>();
-            dbSet.Attach(dbModel);
-            dbContext.Entry(dbModel).State = EntityState.Modified;
+            //DbModel dbModel = model.DeepCopyTo<DbModel>();
+            //dbSet.Attach(dbModel);
+            //dbContext.Entry(dbModel).State = EntityState.Modified;
+            if (entity == null) throw new System.NullReferenceException("Value cannot be null");
+
+            DbModel dbEntity = entity.DeepCopyTo<DbModel>();
+
+            DbModel existingEntity = dbContext.Set<DbModel>().Find(dbEntity.ID);
+
+            if (existingEntity == null)
+            {
+                dbContext.Set<DbModel>().Add(dbEntity);
+            }
+            else
+            {
+                Mapper.Map(entity, existingEntity);
+            }
+            dbContext.SaveChanges();
         }
         public void Delete(TModel model)
         {
             DbModel dbModel = model.DeepCopyTo<DbModel>();
-            if (dbContext.Entry(dbModel).State == EntityState.Detached)
+            DbModel dbModel2 = dbSet.Find(dbModel.ID);
+            if (dbModel2 != null)
             {
-                try
-                {
-                    dbSet.Attach(dbModel);
-                }
-                catch (Exception e)
-                {
-
-                }
-
+                dbSet.Remove(dbModel2);
             }
-            try
-            {
-                dbSet.Remove(dbModel);
-            }
-            catch (Exception e)
-            {
+            //try
+            //{
+            //    dbSet.Remove(dbModel);
+            //}
+            //catch(Exception e)
+            //{
 
-            }
-            
+            //}
+            //try
+            //{
+            //    dbContext.Entry(dbModel).State = EntityState.Deleted;
+            //}
+            //catch (Exception e)
+            //{
+
+            //}
+            //dbContext.SaveChanges();
+            //dbSet.Remove(dbModel);
+
+
         }
 
         public virtual void Upsert<TModel, DbModel>(TModel entity)
