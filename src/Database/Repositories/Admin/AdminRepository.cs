@@ -1,29 +1,37 @@
 ﻿using Qubiz.QuizEngine.Database.Entities;
+using Qubiz.QuizEngine.Database.Repositories.MyTest;
+using Qubiz.QuizEngine.Infrastructure;
 using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace Qubiz.QuizEngine.Database.Repositories
 {
-    public class AdminRepository : BaseRepository<Admin>, IAdminRepository
+    public class AdminRepository : MyBaseRepository<MyAdmin,Admin>, IAdminRepository
     {
         public AdminRepository(QuizEngineDataContext context, UnitOfWork unitOfWork)
             : base(context, unitOfWork)
         { }
 
-        public async Task<Admin[]> ListAsync()
+        public async Task<MyAdmin[]> ListAsync()
         {
-            return await dbSet.ToArrayAsync();
+            Admin[] admins= await dbSet.ToArrayAsync();
+            MyAdmin[] myAdmins = admins.DeepCopyTo<MyAdmin[]>();
+            return myAdmins;
         }
 
-        public async Task<Admin> GetByIDAsync(Guid id)
+        public async Task<MyAdmin> GetByIDAsync(Guid id)
         {
-            return await dbSet.FirstOrDefaultAsync(x => x.ID == id);
+            Admin admin = await dbSet.FirstOrDefaultAsync(x => x.ID == id);
+            MyAdmin myAdmin = admin.DeepCopyTo<MyAdmin>();
+            return myAdmin;
         }
 
-        public async Task<Admin> GetByNameAsync(string name)
+        public async Task<MyAdmin> GetByNameAsync(string name)
         {
-            return await dbSet.FirstOrDefaultAsync(x => x.Name == name);
+            Admin admin = await dbSet.FirstOrDefaultAsync(x => x.Name == name);
+            MyAdmin myAdmin = admin.DeepCopyTo<MyAdmin>();
+            return myAdmin;
         }
     }
 }

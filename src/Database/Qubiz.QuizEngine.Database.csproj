@@ -89,6 +89,8 @@
     <Compile Include="Repositories\FeatureFlag\IFeatureFlagRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
+    <Compile Include="Repositories\MyTest\MyAdmin.cs" />
+    <Compile Include="Repositories\MyTest\MyBaseRepository.cs" />
     <Compile Include="Repositories\Question\IOptionRepository.cs" />
     <Compile Include="Repositories\Question\OptionRepository.cs" />
     <Compile Include="Repositories\Question\IQuestionRepository.cs" />
